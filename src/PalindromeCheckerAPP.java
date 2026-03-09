@@ -10,13 +10,13 @@ class StackStrategy implements PalindromeStrategy {
     public boolean check(String input) {
         if (input == null) return false;
 
-        Stack<Character> stack = new Stack<>();
+        java.util.Stack<Character> stack = new java.util.Stack<>();
         for (char c : input.toCharArray()) {
-            stack.push(c);
+            stack.push(c); // Uses LIFO behavior to reverse characters
         }
 
         for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+            if (c != stack.pop()) { // Compare with original sequence
                 return false;
             }
         }
@@ -24,19 +24,15 @@ class StackStrategy implements PalindromeStrategy {
     }
 }
 
-public class UseCase12PalindromeCheckerApp {
+public class PalindromeCheckerAPP {
     private PalindromeStrategy strategy;
 
     public PalindromeCheckerAPP(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void setStrategy(PalindromeStrategy strategy) {
-        this.strategy = strategy;
+        this.strategy = strategy; // Injects the strategy at runtime
     }
 
     public boolean validate(String input) {
-        return strategy.check(input);
+        return strategy.check(input); // Executes the selected algorithm
     }
 
     public static void main(String[] args) {
@@ -45,8 +41,7 @@ public class UseCase12PalindromeCheckerApp {
         String input = scanner.nextLine();
 
         // Injecting StackStrategy at runtime
-        UseCase12PalindromeCheckerApp app = new UseCase12PalindromeCheckerApp(new StackStrategy());
-
+        PalindromeCheckerAPP app = new PalindromeCheckerAPP(new StackStrategy());
         System.out.println("Is Palindrome? : " + app.validate(input));
         scanner.close();
     }
